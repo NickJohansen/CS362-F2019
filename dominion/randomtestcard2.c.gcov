@@ -1,0 +1,142 @@
+        -:    0:Source:randomtestcard2.c
+        -:    0:Graph:randomtestcard2.gcno
+        -:    0:Data:randomtestcard2.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include "dominion.h"
+        -:    2:#include "dominion_helpers.h"
+        -:    3:#include "rngs.h"
+        -:    4:#include <string.h>
+        -:    5:#include <stdio.h>
+        -:    6:#include <math.h>
+        -:    7:#include <stdlib.h>
+        -:    8:#include <assert.h>
+        -:    9:
+        1:   10:int main(int argc, char** argv) {
+        -:   11:	//minion
+        1:   12:	srand(time(NULL));
+        -:   13:	struct gameState game1;// declarethe arrays 
+        -:   14:	int c1;
+        -:   15:	int c2;
+        -:   16:	int c3;
+        1:   17:	int turns = 0;
+        -:   18:	int player_1;
+        -:   19:	int player_2;
+        1:   20:	int handpos = 0;
+        1:   21:	int* bonasu = 0;
+        1:   22:	game1.numPlayers = MAX_PLAYERS;
+        1:   23:	game1.playedCardCount = 0;
+        -:   24:
+        -:   25:	int i, j, k, l, cop, sil, gol;
+        1:   26:	int go = 1;
+        -:   27:
+        3:   28:	while (go == 1) {
+        1:   29:		player_1 = 0;
+        1:   30:		player_2 = 0;
+        1:   31:		c1 = rand() % 2;
+        1:   32:		c2 = rand() % 2;
+        1:   33:		cop = rand() % 20;
+        1:   34:		sil = rand() % 20;
+        1:   35:		gol = rand() % 20;
+        1:   36:		game1.coins = 0;
+        1:   37:		game1.whoseTurn = rand() % 2;
+        1:   38:		i = 0;
+        1:   39:		printf("\n ----------Beginning Minion Test----------\n");
+        4:   40:		while (i < 2) {
+        2:   41:			j = 0;
+        2:   42:			k = 0;
+        2:   43:			l = 0;
+        -:   44:
+       24:   45:			while (j < cop) {
+       20:   46:				game1.deck[i][j] = copper;
+       20:   47:				j++;
+        -:   48:			}
+        2:   49:			game1.deckCount[i] = j + 1;
+       32:   50:			while (k < sil) {
+       28:   51:				game1.hand[i][k] = silver;
+       28:   52:				k++;
+        -:   53:			}
+        2:   54:			game1.handCount[i] = k + 1;
+        2:   55:			game1.handCount[i + 2] = k + 1;
+       26:   56:			while (l < gol) {
+       22:   57:				game1.discard[i][l] = gold;
+       22:   58:				l++;
+        -:   59:			}
+        2:   60:			game1.discardCount[i] = l + 1;
+        2:   61:			i++;
+        -:   62:		}
+        1:   63:		printf("Turns Passed: &d  Whose Turn: %d\n Choice1: %d, Choice2: %d\n", turns, game1.whoseTurn,c1,c2);
+        1:   64:		k = cardEffect(minion, c1, c2, c3, &game1, handpos, bonasu);
+        1:   65:		printf("Coins in game: %d\n", game1.coins);
+        1:   66:		i = 0;
+        4:   67:		while (i < game1.handCount[0]) {
+        2:   68:			if (game1.hand[0][i] != silver) {
+        2:   69:				player_1 = 1;
+        -:   70:			}
+        2:   71:			i++;
+        -:   72:		}
+        1:   73:		i = 0;
+        6:   74:		while (i < game1.handCount[1]) {
+        4:   75:			if (game1.hand[1][i] != silver) {
+        4:   76:				player_2 = 1;
+        -:   77:			}
+        4:   78:			i++;
+        -:   79:		}
+        1:   80:		if (c1 == 1) {
+    #####:   81:			if (player_1 == 1)
+    #####:   82:				printf("Minion edited players hand [FAIL]\n");
+        -:   83:			else
+    #####:   84:				printf("Minion did not edit players hand [PASS]\n");
+        -:   85:
+    #####:   86:			if (player_2 == 1)
+    #####:   87:				printf("Minion edited players hand [FAIL]\n");
+        -:   88:			else
+    #####:   89:				printf("Minion did not edit players hand [PASS]\n");
+        -:   90:
+    #####:   91:			if (game1.coins != 2)
+    #####:   92:				printf("Minion gives back incorrect coins [FAIL]\n");
+        -:   93:			else
+    #####:   94:				printf("Minion gives back correct coins [PASS]\n");
+        -:   95:			
+    #####:   96:			go = 0;
+        -:   97:		}
+        1:   98:		if (c2 == 1) {
+        1:   99:			if (player_1 == 1)
+        1:  100:				printf("Minion edited players hand [PASS]\n");
+        -:  101:			else
+    #####:  102:				printf("Minion did not edit players hand [FAIL]\n");
+        1:  103:			if (player_2 == 1){
+        1:  104:				if (game1.handCount[3] > 4)
+    #####:  105:					printf("Minion edited cards in hand when more than 4 [PASS]\n");
+        -:  106:				else
+        1:  107:					printf("Minion edited cards in hand when less than 4 [FAIL]\n");
+        -:  108:			}
+        -:  109:			else {
+    #####:  110:				if (game1.handCount[3] > 4)
+    #####:  111:					printf("Minion did not edit cards in hand when more than 4 [FAIL]\n");
+        -:  112:				else
+    #####:  113:					printf("Minion edited cards in hand when more than 4 [PASS]\n");
+        -:  114:			}
+        1:  115:			go = 0;
+        -:  116:		}
+        -:  117:		else {
+    #####:  118:			if (player_1 == 1)
+    #####:  119:				printf("Minion edited cards in players hand[FAIL]\n");
+        -:  120:			else
+    #####:  121:				printf("Minion did not edit cards in players hand[PASS]\n");
+        -:  122:
+    #####:  123:			if (player_2 == 1)
+    #####:  124:				printf("Minion edited cards in players hand[FAIL]\n");
+        -:  125:			else
+    #####:  126:				printf("Minion did not edit cards in players hand[PASS]\n");
+        -:  127:
+    #####:  128:			if (game1.coins != 0)
+    #####:  129:				printf("Minion gives incorrect coins [FAIL]\n");
+        -:  130:			else
+    #####:  131:				printf("Minion gives correct coins [PASS]\n");
+    #####:  132:			go = 0;
+        -:  133:		}
+        1:  134:		turns++;
+        -:  135:	}
+        1:  136:	return 0;
+        -:  137:}

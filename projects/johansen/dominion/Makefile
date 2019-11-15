@@ -17,7 +17,7 @@ unittests: unittest1.c unittest2.c unittest3.c unittest4.c unittest5.c dominion.
 	gcc -o unittest5 -g unittest5.c dominion.o rngs.o -coverage $(CFLAGS)
 	
 unittestresults: unittests 
-	./unittest1 >> unittestresult.out
+	./unittest1 &> unittestresult.out
 	./unittest2 >> unittestresult.out
 	./unittest3 >> unittestresult.out
 	./unittest4 >> unittestresult.out	
@@ -25,7 +25,19 @@ unittestresults: unittests
 	
 	gcov dominion.c >> unittestresult.out
 	cat dominion.c.gcov >> unittestresult.out
+
+randomtests: dominion.o rngs.o randomtestcard1.c randomtestcard2.c randomtestcard3.c
+	gcc -o randomtestcard1 -g  randomtestcard1.c dominion.o rngs.o $(CFLAGS)
+	gcc -o randomtestcard2 -g  randomtestcard2.c dominion.o rngs.o $(CFLAGS)
+	gcc -o randomtestcard3 -g  randomtestcard3.c dominion.o rngs.o $(CFLAGS)
+
+randomtestresults: dominion.o randomtests
+	./randomtestcard1 &> randomtestresults.out
+	./randomtestcard2 >> randomtestresults.out
+	./randomtestcard3 >> randomtestresults.out
 	
+	gcov dominion.c >> randomtestresults.out
+	cat dominion.c.gcov >> randomtestresults.out
 
 clean:
 	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out

@@ -8,24 +8,36 @@ dominion.o: dominion.h dominion.c rngs.o
 
 playdom: dominion.o playdom.c
 	gcc -o playdom playdom.c -g dominion.o rngs.o $(CFLAGS)
-#To run playdom you need to entere: ./playdom <any integer number> like ./playdom 10*/
-
-testDrawCard: testDrawCard.c dominion.o rngs.o
-	gcc  -o testDrawCard -g  testDrawCard.c dominion.o rngs.o $(CFLAGS)
-
-interface.o: interface.h interface.c
-	gcc -c interface.c -g  $(CFLAGS)
-
-runtests: testDrawCard 
-	./testDrawCard &> unittestresult.out
+	
+unittests: unittest1.c unittest2.c unittest3.c unittest4.c unittest5.c dominion.o rngs.o
+	gcc -o unittest1 -g unittest1.c dominion.o rngs.o -coverage $(CFLAGS)
+	gcc -o unittest2 -g unittest2.c dominion.o rngs.o -coverage $(CFLAGS)
+	gcc -o unittest3 -g unittest3.c dominion.o rngs.o -coverage $(CFLAGS)
+	gcc -o unittest4 -g unittest4.c dominion.o rngs.o -coverage $(CFLAGS)
+	gcc -o unittest5 -g unittest5.c dominion.o rngs.o -coverage $(CFLAGS)
+	
+unittestresults: unittests 
+	./unittest1 &> unittestresult.out
+	./unittest2 >> unittestresult.out
+	./unittest3 >> unittestresult.out
+	./unittest4 >> unittestresult.out	
+	./unittest5 >> unittestresult.out	
+	
 	gcov dominion.c >> unittestresult.out
 	cat dominion.c.gcov >> unittestresult.out
 
+randomtests: dominion.o rngs.o randomtestcard1.c randomtestcard2.c randomtestcard3.c
+	gcc -o randomtestcard1 -g  randomtestcard1.c dominion.o rngs.o $(CFLAGS)
+	gcc -o randomtestcard2 -g  randomtestcard2.c dominion.o rngs.o $(CFLAGS)
+	gcc -o randomtestcard3 -g  randomtestcard3.c dominion.o rngs.o $(CFLAGS)
 
-player: player.c interface.o
-	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
-
-all: playdom player 
+randomtestresults: dominion.o randomtests
+	./randomtestcard1 &> randomtestresults.out
+	./randomtestcard2 >> randomtestresults.out
+	./randomtestcard3 >> randomtestresults.out
+	
+	gcov dominion.c >> randomtestresults.out
+	cat dominion.c.gcov >> randomtestresults.out
 
 clean:
-	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe
+	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out

@@ -1,0 +1,107 @@
+        -:    0:Source:unittest5.c
+        -:    0:Graph:unittest5.gcno
+        -:    0:Data:unittest5.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include "dominion.h"
+        -:    2:#include "dominion_helpers.h"
+        -:    3:#include "rngs.h"
+        -:    4:#include <string.h>
+        -:    5:#include <stdio.h>
+        -:    6:#include <math.h>
+        -:    7:#include <stdlib.h>
+        -:    8:#include <assert.h>
+        -:    9:
+        1:   10:int main (int argc, char** argv){
+        1:   11:	int k[10] = { adventurer, council_room, feast, gardens, mine, remodel, smithy, village, baron, great_hall };// declarethe game state
+        -:   12:	struct gameState game1;// declarethe arrays 
+        -:   13:	struct gameState game2;
+        -:   14:	struct gameState game3;
+        1:   15:	int seed = 38;
+        -:   16:	int c1;
+        -:   17:	int c2;
+        -:   18:	int c3;
+        -:   19:	int hand;
+        1:   20:	int* bonasu = 0;
+        -:   21:	
+        1:   22:	printf("Begin Testing do_ambassador():\n");
+        -:   23:
+        -:   24:////////////////////////////////////////////////////////////////////////
+        -:   25:
+        1:   26:	memset(&game1, 23, sizeof(struct gameState));   // set the game state 
+        1:   27:	int r1 = initializeGame(2, k, seed, &game1); // initialize a new game
+        1:   28:	c1 = 0;
+        1:   29:	c2 = 2;
+        1:   30:	c2 = 0;
+        1:   31:	hand = 1;
+        1:   32:	game1.numPlayers = 2;
+        1:   33:	game1.whoseTurn = 0;
+        1:   34:	game1.numActions = 1;
+        1:   35:	game1.numBuys = 1;
+        1:   36:	game1.coins = 10;
+        1:   37:	game1.hand[0][0] = minion;
+        1:   38:	game1.handCount[0] = 1; // set any other variables
+        1:   39:	if(cardEffect(ambassador, c1, c2, c3, &game1, hand,bonasu) == -1){
+    #####:   40:		printf("Test for failing choice [PASS]\n");
+        -:   41:	}
+        -:   42:	else{
+        1:   43:		printf("Test for failing choice Failed [FAIL]\n");
+        -:   44:	}
+        -:   45:
+        -:   46://////////////////////////////////////////////////////////////////////
+        1:   47:	memset(&game2, 23, sizeof(struct gameState));   // set the game state 
+        1:   48:	int r2 = initializeGame(2, k, seed, &game2); // initialize a new game
+        1:   49:	c1 = 1;
+        1:   50:	c2 = 1;
+        1:   51:	c2 = 0;
+        1:   52:	hand = 0;
+        1:   53:	game2.numPlayers = 2;
+        1:   54:	game2.whoseTurn = 0;
+        1:   55:	game2.numActions = 1;
+        1:   56:	game2.numBuys = 1;
+        1:   57:	game2.coins = 10;
+        1:   58:	game2.hand[0][0] = ambassador;
+        1:   59:	game2.handCount[0] = 1; // set any other variables
+        1:   60:	game2.handCount[1] = 0;
+        1:   61:	if(cardEffect(ambassador, c1, c2, c3, &game2, hand,bonasu) == -1){
+    #####:   62:		printf("Test for not having enough cards Passed [PASS]\n");
+        -:   63:	}
+        -:   64:	else{
+        1:   65:		printf("Test for not having enough cards Failed [FAIL]\n");
+        -:   66:	}
+        -:   67:
+        -:   68:///////////////////////////////////////////////////////////////////////
+        1:   69:	memset(&game3, 23, sizeof(struct gameState));   // set the game state 
+        1:   70:	int r3 = initializeGame(2, k, seed, &game3); // initialize a new game
+        1:   71:	c1 = 1;
+        1:   72:	c2 = 1;
+        1:   73:	c2 = 0;
+        1:   74:	hand = 0;
+        1:   75:	game3.numPlayers = 2;
+        1:   76:	game3.whoseTurn = 0;
+        1:   77:	game3.numActions = 1;
+        1:   78:	game3.numBuys = 1;
+        1:   79:	game3.coins = 10;
+        1:   80:	game3.hand[0][0] = ambassador;
+        1:   81:	game3.hand[0][1] = baron;
+        1:   82:	game3.hand[0][2] = baron;
+        1:   83:	game3.handCount[0] = 3; // set any other variables
+        1:   84:	game3.handCount[1] = 0;
+        1:   85:	game1.supplyCount[0] = 5;
+        1:   86:	cardEffect(ambassador, c1, c2, c3, &game3, hand,bonasu);
+        1:   87:	if(game3.handCount[1] == 1){
+    #####:   88:		printf("Test for other players gaining card Passed [PASS]\n");
+        -:   89:	}
+        -:   90:	else{
+        1:   91:		printf("Test for other players gaining card Failed [FAIL]\n");
+        -:   92:	}
+        -:   93:	
+        1:   94:	if(game3.handCount[0] == 0){
+    #####:   95:		printf("Test for getting rid of current player's cards Passed [PASS]\n");
+        -:   96:	}
+        -:   97:	else{
+        1:   98:		printf("Test for getting rid of current player's cards Failed [FAIL]\n");
+        -:   99:	}
+        -:  100:	
+        1:  101:	printf("Testcompleted!\n");
+        -:  102:}

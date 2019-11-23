@@ -1,0 +1,114 @@
+        -:    0:Source:unittest4.c
+        -:    0:Graph:unittest4.gcno
+        -:    0:Data:unittest4.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include "dominion.h"
+        -:    2:#include "dominion_helpers.h"
+        -:    3:#include "rngs.h"
+        -:    4:#include <string.h>
+        -:    5:#include <stdio.h>
+        -:    6:#include <math.h>
+        -:    7:#include <stdlib.h>
+        -:    8:#include <assert.h>
+        -:    9:
+        -:   10://Bug: first if both nextplayer become currentplayer
+        -:   11:
+        1:   12:int main (int argc, char** argv){
+        1:   13:	int k[10] = { adventurer, council_room, feast, gardens, mine, remodel, smithy, village, baron, great_hall };// declarethe game state
+        -:   14:	struct gameState game1;// declarethe arrays 
+        -:   15:	struct gameState game2;
+        1:   16:	int seed = 38;
+        -:   17:	int c1;
+        -:   18:	int c2;
+        -:   19:	int c3;
+        -:   20:	int hand;
+        1:   21:	int* bonasu = 0;
+        -:   22:	
+        1:   23:	printf("Begin Testing do_tribute():\n");
+        -:   24://
+        -:   25:// set the state of your variables
+        -:   26:// comment on what this is going totest
+        -:   27://
+        1:   28:	memset(&game1, 23, sizeof(struct gameState));   // set the game state 
+        1:   29:	int r1 = initializeGame(2, k, seed, &game1); // initialize a new game
+        1:   30:	c1 = 1;
+        1:   31:	c2 = 0;
+        1:   32:	c2 = 0;
+        1:   33:	hand = 0;
+        1:   34:	game1.numPlayers = 2;
+        1:   35:	game1.whoseTurn = 0;
+        1:   36:	game1.numActions = 1;
+        1:   37:	game1.numBuys = 1;
+        1:   38:	game1.coins = 10;
+        1:   39:	game1.hand[0][0] = tribute;
+        1:   40:	game1.deckCount[0] = 0;
+        1:   41:	game1.deckCount[1] = 1;
+        1:   42:	game1.deck[1][0] = gold;
+        1:   43:	game1.discardCount[0] = 0;
+        1:   44:	game1.discardCount[1] = 1;
+        1:   45:	game1.handCount[0] = 1; // set any other variables
+        1:   46:	cardEffect(tribute, c1, c2, c3, &game1, hand, bonasu);
+        1:   47:	if(game1.deckCount[1] == 0){
+    #####:   48:		printf("Test for decrementing deck count for next player Passed [PASS]\n");
+        -:   49:	}
+        -:   50:	else{
+        1:   51:		printf("Test for decrementing deck count for next player Failed [FAIL]\n");
+        -:   52:	}
+        1:   53:	if(game1.discardCount[1] == 0){
+    #####:   54:		printf("Test for decrementing discard count for next player Passed [PASS]\n");
+        -:   55:	}
+        -:   56:	else{
+        1:   57:		printf("Test for decrementing discard count for next player Failed [FAIL]\n");
+        -:   58:	}
+        1:   59:	if(game1.coins == 12){
+    #####:   60:		printf("Test for adding coins Passed [PASS]\n");
+        -:   61:	}
+        -:   62:	else{
+        1:   63:		printf("Test for adding coins Failed [FAIL]\n");
+        -:   64:	}
+        -:   65:
+        -:   66:// verify that your assertspass, for the bugs your asserts may fail
+        -:   67:	
+        -:   68:	//
+        -:   69:	// adjustthe state of your variables to continue testing the function
+        -:   70:	// comment on what this is going to test
+        -:   71:	//
+        1:   72:	memset(&game2, 23, sizeof(struct gameState));   // set the game state 
+        1:   73:	int r2 = initializeGame(2, k, seed, &game2); // initialize a new game
+        1:   74:	c1 = 0;
+        1:   75:	c2 = 1;
+        1:   76:	c2 = 0;
+        1:   77:	hand = 0;
+        1:   78:	game2.numPlayers = 2;
+        1:   79:	game2.whoseTurn = 0;
+        1:   80:	game2.numActions = 1;
+        1:   81:	game2.numBuys = 1;
+        1:   82:	game2.coins = 10;
+        1:   83:	game2.hand[0][0] = tribute;
+        1:   84:	game2.deckCount[0] = 2;
+        1:   85:	game2.deck[0][0] = estate;
+        1:   86:	game2.deck[0][1] = estate;
+        1:   87:	game2.deckCount[1] = 0;
+        1:   88:	game2.deck[1][0] = estate;
+        1:   89:	game2.discardCount[0] = 0;
+        1:   90:	game2.discardCount[1] = 1;
+        1:   91:	game2.discard[1][0] = estate;
+        1:   92:	game2.handCount[0] = 1;
+        1:   93:	cardEffect(tribute, c1, c2, c3, &game2, hand,bonasu);
+        1:   94:	if(game2.discardCount[1] == 0){
+        1:   95:		printf("Test for discard count check Passed [PASS]\n");
+        -:   96:	}
+        -:   97:	else{
+    #####:   98:		printf("Test for discard count check Failed [FAIL]\n");
+        -:   99:	}
+        -:  100:	
+        1:  101:	if(game2.deckCount[1] == 0){
+        1:  102:		printf("Test for deck count check Passed [PASS]\n");
+        -:  103:	}
+        -:  104:	else{
+    #####:  105:		printf("Test for deck count check Passed [FAIL]\n");
+        -:  106:	}
+        -:  107:	
+        1:  108:	printf("Testcompleted!\n");
+        -:  109:}

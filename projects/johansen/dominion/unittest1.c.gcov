@@ -1,0 +1,100 @@
+        -:    0:Source:unittest1.c
+        -:    0:Graph:unittest1.gcno
+        -:    0:Data:unittest1.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include "dominion.h"
+        -:    2:#include "dominion_helpers.h"
+        -:    3:#include "rngs.h"
+        -:    4:#include <string.h>
+        -:    5:#include <stdio.h>
+        -:    6:#include <math.h>
+        -:    7:#include <stdlib.h>
+        -:    8:#include <assert.h>
+        -:    9:
+        1:   10:int main (int argc, char** argv){
+        1:   11:	int k[10] = { adventurer, council_room, feast, gardens, mine, remodel, smithy, village, baron, great_hall };// declarethe game state
+        -:   12:	struct gameState game1;// declarethe arrays 
+        -:   13:	struct gameState game2;
+        1:   14:	int seed = 38;
+        -:   15:	int c1;
+        -:   16:	int c2;
+        -:   17:	int c3;
+        -:   18:	int hand;
+        1:   19:	int* bonasu = 0;
+        -:   20:	
+        1:   21:	printf("Begin Testing do_minion():\n");
+        -:   22://
+        -:   23:// set the state of your variables
+        -:   24:// comment on what this is going totest
+        -:   25://
+        1:   26:	memset(&game1, 23, sizeof(struct gameState));   // set the game state 
+        1:   27:	int r1 = initializeGame(2, k, seed, &game1); // initialize a new game
+        1:   28:	c1 = 1;
+        1:   29:	c2 = 0;
+        1:   30:	c2 = 0;
+        1:   31:	hand = 0;
+        1:   32:	game1.numPlayers = 2;
+        1:   33:	game1.whoseTurn = 0;
+        1:   34:	game1.numActions = 1;
+        1:   35:	game1.numBuys = 1;
+        1:   36:	game1.coins = 10;
+        1:   37:	game1.hand[0][0] = minion;
+        1:   38:	game1.handCount[0] = 1; // set any other variables
+        1:   39:	cardEffect(minion, c1, c2, c3, &game1, hand, bonasu);
+        1:   40:	if(game1.coins == 12){
+    #####:   41:		printf("Test for getting 2 coins Passed [PASS]\n");
+        -:   42:	}
+        -:   43:	else{
+        1:   44:		printf("Test for getting 2 coins Failed [FAIL]\n");
+        -:   45:	}
+        1:   46:	if(game1.handCount[0] == 0){
+    #####:   47:		printf("Test for discarding card Passed [PASS]\n");
+        -:   48:	}
+        -:   49:	else{
+        1:   50:		printf("Test for discarding card Failed [FAIL]\n");
+        -:   51:	}
+        -:   52:
+        -:   53:// verify that your assertspass, for the bugs your asserts may fail
+        -:   54:	
+        -:   55:	//
+        -:   56:	// adjustthe state of your variables to continue testing the function
+        -:   57:	// comment on what this is going to test
+        -:   58:	//
+        1:   59:	memset(&game2, 23, sizeof(struct gameState));   // set the game state 
+        1:   60:	int r2 = initializeGame(2, k, seed, &game2); // initialize a new game
+        1:   61:	c1 = 0;
+        1:   62:	c2 = 1;
+        1:   63:	c2 = 0;
+        1:   64:	hand = 0;
+        1:   65:	game2.numPlayers = 2;
+        1:   66:	game2.whoseTurn = 0;
+        1:   67:	game2.numActions = 1;
+        1:   68:	game2.numBuys = 1;
+        1:   69:	game2.coins = 10;
+        1:   70:	game2.hand[0][0] = minion;
+        1:   71:	game2.hand[0][1] = adventurer;
+        1:   72:	game2.hand[1][0] = adventurer;
+        1:   73:	game2.hand[1][1] = adventurer;
+        1:   74:	game2.hand[1][2] = adventurer;
+        1:   75:	game2.hand[1][3] = adventurer;
+        1:   76:	game2.hand[1][4] = adventurer;
+        1:   77:	game2.hand[1][5] = adventurer;
+        1:   78:	game2.handCount[0] = 1; // set any other variables
+        1:   79:	game2.handCount[1] = 6;
+        1:   80:	cardEffect(minion, c1, c2, c3, &game2, hand, bonasu);
+        1:   81:	if(game2.handCount[0] == 4){
+    #####:   82:		printf("Test for getting 4 cards Passed [PASS]\n");
+        -:   83:	}
+        -:   84:	else{
+        1:   85:		printf("Test for getting 4 coins Failed [FAIL]\n");
+        -:   86:	}
+        1:   87:	if(game2.handCount[1] == 4){
+    #####:   88:		printf("Test for other player 4 cards Passed [PASS]\n");
+        -:   89:	}
+        -:   90:	else{
+        1:   91:		printf("Test for other player 4 cards Failed [FAIL]\n");
+        -:   92:	}
+        -:   93:	
+        1:   94:	printf("Testcompleted!\n");
+        -:   95:}

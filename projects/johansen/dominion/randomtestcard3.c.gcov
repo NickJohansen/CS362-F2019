@@ -1,0 +1,100 @@
+        -:    0:Source:randomtestcard3.c
+        -:    0:Graph:randomtestcard3.gcno
+        -:    0:Data:randomtestcard3.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include "dominion.h"
+        -:    2:#include "dominion_helpers.h"
+        -:    3:#include "rngs.h"
+        -:    4:#include <string.h>
+        -:    5:#include <stdio.h>
+        -:    6:#include <math.h>
+        -:    7:#include <stdlib.h>
+        -:    8:#include <assert.h>
+        -:    9:
+        1:   10:int main(int argc, char** argv) {
+        -:   11:	//tribute
+        1:   12:	srand(time(NULL));
+        -:   13:	struct gameState game1;// declarethe arrays 
+        -:   14:	struct gameState game2;
+        -:   15:	int c1;
+        -:   16:	int c2;
+        -:   17:	int c3;
+        1:   18:	int turns = 0;
+        1:   19:	int handpos = 0;
+        1:   20:	int* bonasu = 0;
+        1:   21:	game1.numPlayers = MAX_PLAYERS;
+        1:   22:	game1.playedCardCount = 0;
+        1:   23:	int go = 1;
+        -:   24:
+      502:   25:	while (go) {
+      500:   26:		int hand = 0;
+      500:   27:		c1 = rand() % 2;
+      500:   28:		c2 = rand() % 2;
+      500:   29:		game1.whoseTurn = rand() % 2;
+      500:   30:		game2.whoseTurn = game1.whoseTurn;
+      500:   31:		game1.numActions = 1;
+      500:   32:		game2.numActions = 1;
+      500:   33:		game1.numBuys = rand() % 2;
+      500:   34:		game2.numBuys = game1.numBuys;
+      500:   35:		game1.coins = 10;
+      500:   36:		game1.deckCount[0] = rand() % 5;
+      500:   37:		game2.deckCount[0] = game1.deckCount[0];
+      500:   38:		game1.deckCount[1] = rand() % 5;
+      500:   39:		game2.deckCount[1] = game1.deckCount[1];
+      500:   40:		game1.handCount[0] = 0;
+      500:   41:		game2.handCount[0] = 0;
+        -:   42:
+     1489:   43:		for (int i = 0; i < game1.deckCount[0]; i++) {
+      989:   44:			game1.hand[0][i] = rand() % 20;
+      989:   45:			game2.hand[0][i] = game1.hand[0][i];
+      989:   46:			game1.handCount[0]++;
+      989:   47:			game2.handCount[0]++;
+        -:   48:		}
+        -:   49:
+     1526:   50:		for (int i = 0; i < game1.deckCount[1]; i++) {
+     1026:   51:			game1.hand[1][i] = rand() % 20;
+     1026:   52:			game2.hand[1][i] = game1.hand[1][i];
+     1026:   53:			game1.handCount[1]++;
+     1026:   54:			game2.handCount[1]++;
+        -:   55:		}
+      500:   56:		game1.discardCount[0] = rand() % 2;
+      500:   57:		game2.discardCount[0] = game1.discardCount[0];
+      500:   58:		game1.discardCount[1] = rand() % 2;
+      500:   59:		game2.discardCount[1] = game1.discardCount[1];
+        -:   60:
+        -:   61:
+      500:   62:		game1.handCount[0] = 1; // set any other variables
+      500:   63:		cardEffect(tribute, c1, c2, c3, &game1, hand, bonasu);
+        -:   64:		
+      500:   65:		if (game2.discardCount[game2.whoseTurn] + game2.deckCount[game2.whoseTurn] < 1) {
+       43:   66:			if (game2.discardCount[game2.whoseTurn] > 0) {
+    #####:   67:				if (game2.discardCount[game2.whoseTurn] == game1.discardCount[game1.whoseTurn] + 1)
+    #####:   68:					printf("Tribute Successfully Discarded card [PASS]\n");
+        -:   69:				else
+    #####:   70:					printf("Tribute Unsuccessfully Discarded card [FAIL]\n");
+        -:   71:			}
+        -:   72:			else {
+       43:   73:				if (game2.deckCount[game2.whoseTurn] == game1.deckCount[game1.whoseTurn] + 1)
+    #####:   74:					printf("Tribute Successfully decremented deck [PASS]\n");
+        -:   75:				else
+       43:   76:					printf("Tribute Unsuccessfully decremented deck [FAIL]\n");
+        -:   77:			}
+        -:   78:		}
+        -:   79:		else {
+      457:   80:			if (game2.deckCount[game2.whoseTurn] == game1.deckCount[game1.whoseTurn] + 2)
+       31:   81:				printf("Tribute Successfully got rid of deck [PASS]\n");
+        -:   82:			else
+      426:   83:				printf("Tribute Unsuccessfully got rid of deck [FAIL]\n");
+        -:   84:		}
+      500:   85:		if ((game2.deckCount[game2.whoseTurn] + 2 == game1.deckCount[game1.whoseTurn]) || game1.numActions == 3 || game1.coins == 12)
+       12:   86:			printf("Tribute Successfully went through for loop [PASS]\n");
+        -:   87:		else
+      488:   88:			printf("Tribute Unsuccessfully went through for loop [PASS]\n");
+      500:   89:		turns++;
+      500:   90:		if (turns == 500) {
+        1:   91:			go = 0;
+        -:   92:		}
+        -:   93:	}
+        -:   94:
+        -:   95:}

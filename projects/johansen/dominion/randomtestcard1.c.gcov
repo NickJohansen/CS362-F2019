@@ -1,0 +1,71 @@
+        -:    0:Source:randomtestcard1.c
+        -:    0:Graph:randomtestcard1.gcno
+        -:    0:Data:randomtestcard1.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include "dominion.h"
+        -:    2:#include "dominion_helpers.h"
+        -:    3:#include "rngs.h"
+        -:    4:#include <string.h>
+        -:    5:#include <stdio.h>
+        -:    6:#include <math.h>
+        -:    7:#include <stdlib.h>
+        -:    8:#include <assert.h>
+        -:    9:
+        1:   10:int main(int argc, char** argv) {
+        -:   11:	//baron
+        1:   12:	srand(time(NULL));
+        -:   13:	struct gameState game1;// declarethe arrays
+        -:   14:	int c1;
+        -:   15:	int c2;
+        -:   16:	int c3;
+        1:   17:	int turns = 0;
+        1:   18:	int hand = 0;
+        1:   19:	int* bonasu = 0;
+        -:   20:	int count;
+        -:   21:
+        1:   22:	game1.numPlayers = MAX_PLAYERS;
+        1:   23:	game1.playedCardCount = 0;
+        1:   24:	int go = 1;
+      502:   25:	while (go == 1) {
+      500:   26:		c1 = rand() % 2;
+      500:   27:		c2 = rand() % 2;
+      500:   28:		c2 = 0;
+      500:   29:		hand = 0;
+      500:   30:		game1.whoseTurn = 0;
+      500:   31:		game1.numActions = rand() % 5;
+      500:   32:		game1.numBuys = 1;
+      500:   33:		game1.coins = 10;
+      500:   34:		game1.hand[0][0] = rand() % 20;
+      500:   35:		game1.hand[0][1] = rand() % 20;
+      500:   36:		game1.supplyCount[0] = rand() % 20;
+      500:   37:		count = rand() % 10;
+      500:   38:		game1.handCount[0] = count; // set any other variables
+      500:   39:		cardEffect(baron, c1, c2, c3, &game1, hand, bonasu);
+      500:   40:		if (c1 == 0) {
+      258:   41:			if (game1.hand[0][1] == estate) {
+       13:   42:				if (game1.coins == 14)
+    #####:   43:					printf("Baron successfully added coins [PASS]\n");
+        -:   44:				else
+       13:   45:					printf("Baron unsuccessfully added coins [PASS]\n");
+        -:   46:			}
+        -:   47:			else {
+      245:   48:				if (game1.handCount[0] == (count + 1))
+    #####:   49:					printf("Baron succesfully gained a card [PASS]\n");
+        -:   50:				else
+      245:   51:					printf("Baron unsuccesfully gained a card [FAIL]\n");
+        -:   52:			}
+        -:   53:		}
+        -:   54:		else {
+      242:   55:			if (game1.supplyCount[0] > 0) {
+      233:   56:				if (game1.handCount[0] == (count + 1))
+    #####:   57:					printf("Baron succesfully gained a card [PASS]\n");
+        -:   58:				else
+      233:   59:					printf("Baron unsuccesfully gained a card [FAIL]\n");
+        -:   60:			}
+        -:   61:		}
+      500:   62:		turns++;
+      500:   63:		if (turns == 500)
+        1:   64:			go = 0;
+        -:   65:	}
+        -:   66:}

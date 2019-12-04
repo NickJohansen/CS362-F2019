@@ -40,10 +40,10 @@ int main (int argc, char** argv){
 	game1.handCount[0] = 2; // set any other variables
 	cardEffect(mine, c1, c2, c3, &game1, hand, 0);
 	if(game1.discardCount[0] == 1){
-		printf("Test for discard card trashing Passed [PASS]\n");
+		printf("Test for discard card trashing [FAIL]\n");
 	}
 	else{
-		printf("Test for discard card trashing Failed [FAIL]\n");
+		printf("Test for discard card trashing [PASS]\n");
 	}
 
 }

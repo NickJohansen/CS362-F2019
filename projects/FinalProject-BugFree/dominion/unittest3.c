@@ -41,23 +41,23 @@ int main (int argc, char** argv){
 	game1.handCount[0] = 2; // set any other variables
 	cardEffect(remodel, c1, c2, c3, &game1, hand, bonasu);
 	if(game1.handCount[0] == 3){
-		printf("Test for gaining a card Passed [PASS]\n");
+		printf("Test for gaining a card [FAIL]\n");
 	}
 	else{
-		printf("Test for gaining a card Failed [FAIL]\n");
+		printf("Test for gaining a card [PASS]\n");
 	}
 	
 	if(game1.discardCount[0] == 1){
-		printf("Test for discarding a card Passed [PASS]\n");
+		printf("Test for discarding a card [FAIL]\n");
 	}
 	else{
-		printf("Test for discarding a card Failed [FAIL]\n");
+		printf("Test for discarding a card [PASS]\n");
 	}
 	
 	if(game1.hand[0][3] == silver){
-		printf("Test for correct card Passed [PASS]\n");
+		printf("Test for correct card [FAIL]\n");
 	}
 	else{
-		printf("Test for correct card Failed [FAIL]\n");
+		printf("Test for correct card [PASS]\n");
 	}
 }

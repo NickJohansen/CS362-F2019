@@ -39,24 +39,24 @@ int main (int argc, char** argv){
 	game1.discardCount[0] = 0;
 	game1.handCount[0] = 2; // set any other variables
 	if(cardEffect(mine, c1, c2, c3, &game1, hand,bonasu) == 0){
-		printf("Test for correct setup [PASS]\n");
+		printf("Test for correct setup [FAIL]\n");
 	}
 	else{
-		printf("Test for correct setup [FAIL]\n");
+		printf("Test for correct setup [PASS]\n");
 	}
 	
 	if(game1.handCount[0] == 3){
-		printf("Test for correct hand [PASS]\n");
+		printf("Test for correct hand [FAIL]\n");
 	}
 	else{
-		printf("Test for correct hand [FAIL]\n");
+		printf("Test for correct hand [PASS]\n");
 	}
 	
 	if(game1.discardCount[0] == 1){
-		printf("Test for discarding [PASS]\n");
+		printf("Test for discarding [FAIL]\n");
 	}
 	else{
-		printf("Test for discarding [FAIL]\n");
+		printf("Test for discarding [PASS]\n");
 	}
 
 }

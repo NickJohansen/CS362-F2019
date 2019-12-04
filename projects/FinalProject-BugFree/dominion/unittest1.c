@@ -25,7 +25,7 @@ int main (int argc, char** argv){
 //
 	memset(&game1, 23, sizeof(struct gameState));   // set the game state 
 	int r1 = initializeGame(2, k, seed, &game1); // initialize a new game
-	c1 = silver;
+	c1 = 0;
 	c2 = baron;
 	c2 = 0;
 	hand = 0;

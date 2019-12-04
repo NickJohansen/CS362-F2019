@@ -26,8 +26,8 @@ int main (int argc, char** argv){
 //
 	memset(&game1, 23, sizeof(struct gameState));   // set the game state 
 	int r1 = initializeGame(2, k, seed, &game1); // initialize a new game
-	c1 = remodel;
-	c2 = silver;
+	c1 = 0;
+	c2 = remodel;
 	c2 = 0;
 	hand = 0;
 	game1.numPlayers = 2;
@@ -35,7 +35,7 @@ int main (int argc, char** argv){
 	game1.numActions = 1;
 	game1.numBuys = 1;
 	game1.coins = 10;
-	game1.hand[0][0] = remodel;
+	game1.hand[0][0] = silver;
 	game1.discardCount[0] = 0;
 	game1.handCount[0] = 2; // set any other variables
 	if(cardEffect(mine, c1, c2, c3, &game1, hand,bonasu) == 0){

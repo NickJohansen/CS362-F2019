@@ -27,7 +27,7 @@ unittestresults: unittests
 	./unittest3.test >> unittestresult.out
 	./unittest4.test >> unittestresult.out	
 	./unittest5.test >> unittestresult.out	
-	# ./unittest6.test >> unittestresult.out
+	./unittest6.test >> unittestresult.out
 	./unittest7.test >> unittestresult.out
 	./unittest8.test >> unittestresult.out
 	./unittest9.test >> unittestresult.out	

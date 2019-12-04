@@ -9,7 +9,7 @@ dominion.o: dominion.h dominion.c rngs.o
 playdom: dominion.o playdom.c
 	gcc -o playdom playdom.c -g dominion.o rngs.o $(CFLAGS)
 	
-unittests: unittest1.c unittest2.c unittest3.c unittest4.c unittest8.c dominion.o rngs.o
+unittests: unittest1.c unittest2.c unittest3.c unittest4.c unittest5.c unittest6.c unittest7.c unittest8.c unittest9.c unittest10.c dominion.o rngs.o
 	gcc -o unittest1.test -g unittest1.c dominion.o rngs.o -coverage $(CFLAGS)
 	gcc -o unittest2.test -g unittest2.c dominion.o rngs.o -coverage $(CFLAGS)
 	gcc -o unittest3.test -g unittest3.c dominion.o rngs.o -coverage $(CFLAGS)
@@ -27,7 +27,7 @@ unittestresults: unittests
 	./unittest3.test >> unittestresult.out
 	./unittest4.test >> unittestresult.out	
 	./unittest5.test >> unittestresult.out	
-	#./unittest6.test >> unittestresult.out
+	# ./unittest6.test >> unittestresult.out
 	./unittest7.test >> unittestresult.out
 	./unittest8.test >> unittestresult.out
 	./unittest9.test >> unittestresult.out	
